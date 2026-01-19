@@ -1,0 +1,27 @@
+@config "../tailwind.config.js";
+@import "tailwindcss";
+
+@layer base {
+  body {
+    @apply bg-white text-neutral-900;
+  }
+}
+
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center w-full h-12 rounded-btn font-medium disabled:opacity-60 disabled:cursor-not-allowed;
+  }
+
+  .btn-primary {
+    @apply bg-brand-3 text-white hover:brightness-90;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-brand-3 border border-brand-3 hover:bg-brand-0;
+  }
+
+  .btn-danger {
+    @apply bg-red text-white hover:brightness-90;
+  }
+}
