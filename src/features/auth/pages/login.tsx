@@ -1,25 +1,27 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useMutation } from '@tanstack/react-query'
+import { loginApi } from '../api/login.api'
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('')
+  const navigate = useNavigate()
+  const [id, setId] = useState('')
   const [password, setPassword] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const loginMutation = useMutation({
+    mutationFn: loginApi,
+    onSuccess: (response) => {
+      console.log(response);
+      
+      if (response?.data?.success) {
+        // navigate('/')
+      }
+    },
+  })
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    setIsLoading(true)
-
-    // TODO: API 연동
-    try {
-      // 로그인 로직 구현 예정
-      console.log('Login attempt:', { email, password })
-      await new Promise((resolve) => setTimeout(resolve, 1000)) // 임시 딜레이
-    } catch (error) {
-      console.error('Login error:', error)
-    } finally {
-      setIsLoading(false)
-    }
+    loginMutation.mutate({ id, password })
   }
 
   return (
@@ -32,17 +34,17 @@ export default function LoginPage() {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="email" className="mb-2 block text-sm font-medium text-neutral-700">
-              이메일
+            <label htmlFor="id" className="mb-2 block text-sm font-medium text-neutral-700">
+              아이디
             </label>
             <input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              id="id"
+              type="text"
+              value={id}
+              onChange={(e) => setId(e.target.value)}
               required
               className="w-full rounded-base border border-neutral-300 px-4 py-3 text-neutral-900 placeholder-neutral-400 focus:border-brand-3 focus:outline-none focus:ring-2 focus:ring-brand-3/20"
-              placeholder="example@email.com"
+              placeholder="아이디를 입력하세요"
             />
           </div>
 
@@ -79,10 +81,10 @@ export default function LoginPage() {
 
           <button
             type="submit"
-            disabled={isLoading}
+            disabled={loginMutation.isPending}
             className="btn btn-primary"
           >
-            {isLoading ? '로그인 중...' : '로그인'}
+            {loginMutation.isPending ? '로그인 중...' : '로그인'}
           </button>
 
           <div className="text-center">

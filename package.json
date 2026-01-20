@@ -10,8 +10,6 @@
     "test:build": "vite build --mode test",
     "prod:start": "vite --mode prod",
     "prod:build": "vite build --mode prod",
-    "dev": "vite",
-    "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
