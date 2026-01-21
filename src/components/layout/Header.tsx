@@ -12,17 +12,6 @@ export default function Header() {
         {/* 메뉴 */}
         <nav className="flex items-center gap-2 text-sm">
           <NavLink
-            to="/memo"
-            className={({ isActive }) =>
-              `rounded px-3 py-2 transition ${
-                isActive ? 'bg-slate-900 text-white' : 'text-slate-600 hover:bg-slate-100'
-              }`
-            }
-          >
-            메모
-          </NavLink>
-
-          <NavLink
             to="/memo/list"
             className={({ isActive }) =>
               `rounded px-3 py-2 transition ${
@@ -30,7 +19,7 @@ export default function Header() {
               }`
             }
           >
-            목록
+            메모
           </NavLink>
 
           <NavLink

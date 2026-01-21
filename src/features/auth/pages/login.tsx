@@ -11,8 +11,6 @@ export default function LoginPage() {
   const loginMutation = useMutation({
     mutationFn: loginApi,
     onSuccess: (response) => {
-      console.log(response);
-      
       if (response?.data?.success) {
         // navigate('/')
       }

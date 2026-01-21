@@ -15,5 +15,6 @@ export const loginApi = async ({ id, password }: LoginRequest) => {
     method: 'post',
     url: 'member/login',
     data: { id, password },
+    showToast: true,
   })
 }
