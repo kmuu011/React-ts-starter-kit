@@ -1,9 +1,11 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { getMemoListApi } from '../api/memo.api'
 import MemoItem from '../components/MemoItem'
 
 export default function MemoListPage() {
+  const navigate = useNavigate()
   const [page, setPage] = useState(1)
   const count = 10
 
@@ -14,15 +16,26 @@ export default function MemoListPage() {
 
   const memoList = data?.data?.itemList ?? []
   const totalCount = data?.data?.totalCount ?? 0
-  const lastPage = data?.data?.last ?? 1
+  const lastPage = Math.ceil(totalCount / count) || 1
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8">
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold text-neutral-900">메모 목록</h1>
-        <p className="mt-2 text-sm text-neutral-600">
-          저장된 메모를 확인하고 관리하세요 ({totalCount}개)
-        </p>
+      <div className="mb-6 flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-neutral-900">메모 목록</h1>
+          <p className="mt-2 text-sm text-neutral-600">
+            저장된 메모를 확인하고 관리하세요 ({totalCount}개)
+          </p>
+        </div>
+        <button
+          onClick={() => navigate('/memo/create')}
+          className="flex items-center gap-2 rounded-base bg-neutral-900 px-4 py-2 text-sm text-white hover:bg-neutral-800"
+        >
+          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+          </svg>
+          새 메모
+        </button>
       </div>
 
       {isLoading && (

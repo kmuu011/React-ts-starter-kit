@@ -18,6 +18,9 @@ export default {
         purple: "#ab86c8",
         gray: "#686868",
         disable: "#c0c0c0",
+        modal: {
+          overlay: "rgba(0, 0, 0, 0.4)",
+        },
       },
       borderRadius: {
         base: "0.4rem",
