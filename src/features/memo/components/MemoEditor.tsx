@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from 'react'
 import type { BlockType, MemoBlock } from '../api/memo.api'
+import { uploadFilesApi, getFileDownloadUrl } from '../api/memo.api'
 import { useModalStore } from '@/shared/store/modalStore'
 
-type EditorBlock = Omit<MemoBlock, 'idx'> & { tempId: string }
+type EditorBlock = Omit<MemoBlock, 'idx'> & { tempId: string; previewUrl?: string }
 
 type MemoEditorProps = {
   initialTitle?: string | null
@@ -21,8 +22,11 @@ export default function MemoEditor({
 }: MemoEditorProps) {
   const [title, setTitle] = useState(initialTitle || '')
   const [focusedBlockId, setFocusedBlockId] = useState<string | null>(null)
+  const [isUploading, setIsUploading] = useState(false)
   const { openModal, closeModal } = useModalStore()
   const shortcutsModalId = 'memo-shortcuts'
+  const imageInputRef = useRef<HTMLInputElement>(null)
+  const videoInputRef = useRef<HTMLInputElement>(null)
   const [blocks, setBlocks] = useState<EditorBlock[]>(() => {
     if (initialBlocks.length > 0) {
       return initialBlocks.map((block, index) => ({
@@ -415,8 +419,49 @@ export default function MemoEditor({
   }, [blocks])
 
   const handleSave = () => {
-    const saveBlocks = blocks.map(({ tempId, ...block }) => block)
+    const saveBlocks = blocks.map(({ tempId, previewUrl, ...block }) => block)
     onSave(title || null, saveBlocks)
+  }
+
+  const handleFileUpload = async (files: FileList | null, type: 'IMAGE' | 'VIDEO') => {
+    if (!files || files.length === 0) return
+
+    setIsUploading(true)
+    try {
+      const fileArray = Array.from(files)
+      const response = await uploadFilesApi(fileArray)
+
+      if (response?.data && response.data.length > 0) {
+        const focusedIndex = focusedBlockId
+          ? blocks.findIndex((b) => b.tempId === focusedBlockId)
+          : blocks.length - 1
+        const insertIndex = focusedIndex >= 0 ? focusedIndex : blocks.length - 1
+
+        const newBlocks = [...blocks]
+
+        response.data.forEach((fileInfo: { idx: number }, i: number) => {
+          const newBlock: EditorBlock = {
+            tempId: `block-${Date.now()}-${i}`,
+            orderIndex: insertIndex + 1 + i,
+            type,
+            fileIdx: fileInfo.idx,
+          }
+          newBlocks.splice(insertIndex + 1 + i, 0, newBlock)
+        })
+
+        // orderIndex 재정렬
+        newBlocks.forEach((block, index) => {
+          block.orderIndex = index
+        })
+
+        setBlocks(newBlocks)
+      }
+    } finally {
+      setIsUploading(false)
+      // input 초기화
+      if (imageInputRef.current) imageInputRef.current.value = ''
+      if (videoInputRef.current) videoInputRef.current.value = ''
+    }
   }
 
   const renderBlockEditor = (block: EditorBlock, index: number) => {
@@ -475,6 +520,45 @@ export default function MemoEditor({
             />
           </div>
         )
+      case 'IMAGE':
+        return (
+          <div className="relative rounded-lg bg-neutral-100 p-2">
+            {block.fileIdx ? (
+              <img
+                src={getFileDownloadUrl(block.fileIdx)}
+                alt="이미지"
+                className="max-h-64 rounded object-contain"
+              />
+            ) : (
+              <div className="flex items-center gap-2 p-4 text-neutral-500">
+                <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span>이미지 업로드 중...</span>
+              </div>
+            )}
+          </div>
+        )
+      case 'VIDEO':
+        return (
+          <div className="relative rounded-lg bg-neutral-100 p-2">
+            {block.fileIdx ? (
+              <video
+                src={getFileDownloadUrl(block.fileIdx)}
+                controls
+                className="max-h-64 rounded"
+              />
+            ) : (
+              <div className="flex items-center gap-2 p-4 text-neutral-500">
+                <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>비디오 업로드 중...</span>
+              </div>
+            )}
+          </div>
+        )
       default:
         return null
     }
@@ -482,6 +566,23 @@ export default function MemoEditor({
 
   return (
     <div className="rounded-base border border-neutral-200 bg-white">
+      <input
+        ref={imageInputRef}
+        type="file"
+        accept="image/*"
+        multiple
+        className="hidden"
+        onChange={(e) => handleFileUpload(e.target.files, 'IMAGE')}
+      />
+      <input
+        ref={videoInputRef}
+        type="file"
+        accept="video/*"
+        multiple
+        className="hidden"
+        onChange={(e) => handleFileUpload(e.target.files, 'VIDEO')}
+      />
+
       <div className="border-b border-neutral-100 p-4 flex items-center gap-2">
         <input
           type="text"
@@ -604,6 +705,27 @@ export default function MemoEditor({
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             체크리스트
+          </button>
+          <button
+            onClick={() => imageInputRef.current?.click()}
+            disabled={isUploading}
+            className="flex items-center gap-1 rounded px-2 py-1 text-sm text-neutral-500 hover:bg-neutral-100 disabled:opacity-50"
+          >
+            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            {isUploading ? '업로드 중...' : '이미지'}
+          </button>
+          <button
+            onClick={() => videoInputRef.current?.click()}
+            disabled={isUploading}
+            className="flex items-center gap-1 rounded px-2 py-1 text-sm text-neutral-500 hover:bg-neutral-100 disabled:opacity-50"
+          >
+            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            {isUploading ? '업로드 중...' : '비디오'}
           </button>
         </div>
       </div>

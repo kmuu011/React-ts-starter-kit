@@ -96,3 +96,47 @@ export const toggleBlockCheckedApi = async (memoIdx: number, blockIdx: number) =
     showToast: false,
   })
 }
+
+// 파일 정보
+export type FileInfo = {
+  idx: number
+  fileKey: string
+  fileName: string
+  fileType: string
+  fileMimeType: string
+  fileSize: string
+  createdAt: string
+}
+
+// 파일 업로드
+export const uploadFilesApi = async (
+  files: File[],
+  onUploadProgress?: (progressEvent: { loaded: number; total?: number }) => void
+) => {
+  const formData = new FormData()
+  files.forEach((file) => {
+    formData.append('files', file)
+  })
+
+  return callApi<FileInfo[]>({
+    method: 'post',
+    url: 'file/upload',
+    data: formData,
+    onUploadProgress,
+    showToast: true,
+  })
+}
+
+// 파일 다운로드 URL 생성
+export const getFileDownloadUrl = (fileIdx: number) => {
+  return `${import.meta.env.VITE_API_URL}/api/file/${fileIdx}/download`
+}
+
+// 파일 삭제
+export const deleteFileApi = async (fileIdx: number) => {
+  return callApi<{ result: boolean }>({
+    method: 'delete',
+    url: `file/${fileIdx}`,
+    showToast: true,
+  })
+}
