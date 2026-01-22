@@ -13,10 +13,16 @@ export const ROUTER_PATHS = {
   
   // 메모
   MEMO: {
+    ROOT: '/memo',
     LIST: '/memo/list',
     CREATE: '/memo/create',
     DETAIL: (memoIdx: number | string) => `/memo/${memoIdx}`,
     EDIT: (memoIdx: number | string) => `/memo/${memoIdx}/edit`,
+  },
+
+  // 테스트
+  TEST: {
+    LEXICAL: '/test/lexical',
   },
 } as const
 

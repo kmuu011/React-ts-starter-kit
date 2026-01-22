@@ -243,6 +243,12 @@ export default function MemoEditor({
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault()
+              addBlock('TEXT', -1)
+            }
+          }}
           placeholder="제목을 입력하세요..."
           className="flex-1 border-0 bg-transparent p-0 text-lg font-medium text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-0"
         />

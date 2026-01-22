@@ -269,35 +269,69 @@ export const useMemoEditor = ({ initialTitle, initialBlocks, onSave }: UseMemoEd
       return
     }
 
-    // 방향키 위: 이전 블록으로 이동
+    // 방향키 위: textarea의 첫 줄에서만 이전 블록으로 이동
     if (e.key === 'ArrowUp') {
+      const currentElement = e.target as HTMLElement
+
+      // textarea인 경우 커서가 실제로 이동할 수 있는지 확인
+      if (currentElement instanceof HTMLTextAreaElement) {
+        const beforePosition = currentElement.selectionStart ?? 0
+
+        // 기본 동작을 일단 허용하고, 커서가 이동했는지 확인
+        setTimeout(() => {
+          const afterPosition = currentElement.selectionStart ?? 0
+
+          // 커서가 이동하지 않았다면 첫 줄에 있는 것
+          if (beforePosition === afterPosition && index > 0) {
+            focusBlock(blocks[index - 1].tempId, beforePosition)
+          }
+        }, 0)
+        return // textarea 내부 이동 허용
+      }
+
+      // input인 경우에만 즉시 이전 블록으로 이동
       if (index > 0) {
         e.preventDefault()
-        const currentElement = e.target as HTMLElement
         let cursorPosition = 0
 
-        if (currentElement instanceof HTMLTextAreaElement || currentElement instanceof HTMLInputElement) {
+        if (currentElement instanceof HTMLInputElement) {
           cursorPosition = currentElement.selectionStart ?? 0
         }
 
-        // 현재 커서 위치를 유지하여 위 블록으로 이동
         focusBlock(blocks[index - 1].tempId, cursorPosition)
       }
       return
     }
 
-    // 방향키 아래: 다음 블록으로 이동
+    // 방향키 아래: textarea의 마지막 줄에서만 다음 블록으로 이동
     if (e.key === 'ArrowDown') {
+      const currentElement = e.target as HTMLElement
+
+      // textarea인 경우 커서가 실제로 이동할 수 있는지 확인
+      if (currentElement instanceof HTMLTextAreaElement) {
+        const beforePosition = currentElement.selectionStart ?? 0
+
+        // 기본 동작을 일단 허용하고, 커서가 이동했는지 확인
+        setTimeout(() => {
+          const afterPosition = currentElement.selectionStart ?? 0
+
+          // 커서가 이동하지 않았다면 마지막 줄에 있는 것
+          if (beforePosition === afterPosition && index < blocks.length - 1) {
+            focusBlock(blocks[index + 1].tempId, beforePosition)
+          }
+        }, 0)
+        return // textarea 내부 이동 허용
+      }
+
+      // input인 경우에만 즉시 다음 블록으로 이동
       if (index < blocks.length - 1) {
         e.preventDefault()
-        const currentElement = e.target as HTMLElement
         let cursorPosition = 0
 
-        if (currentElement instanceof HTMLTextAreaElement || currentElement instanceof HTMLInputElement) {
+        if (currentElement instanceof HTMLInputElement) {
           cursorPosition = currentElement.selectionStart ?? 0
         }
 
-        // 현재 커서 위치를 유지하여 아래 블록으로 이동
         focusBlock(blocks[index + 1].tempId, cursorPosition)
       }
       return
