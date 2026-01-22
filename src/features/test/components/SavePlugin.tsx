@@ -6,7 +6,10 @@ export default function SavePlugin() {
   const handleSave = () => {
     const editorState = editor.getEditorState()
     const json = editorState.toJSON()
-    console.log('Editor Content:', json)
+    console.log('서버 저장용 JSON:', json)
+
+    // 여기서 실제 서버 저장 로직 추가
+    // await saveToServer({ content: json })
   }
 
   return (
