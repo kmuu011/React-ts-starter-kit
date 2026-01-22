@@ -26,8 +26,8 @@ ul.lexical-checklist li:before {
 }
 
 ul.lexical-checklist li.lexical-list-item-checked:before {
-  background-color: #3b82f6;
-  border-color: #3b82f6;
+  background-color: #8165cf;
+  border-color: #8165cf;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white' stroke-width='3'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M5 13l4 4L19 7'/%3E%3C/svg%3E");
   background-size: 12px;
   background-position: center;

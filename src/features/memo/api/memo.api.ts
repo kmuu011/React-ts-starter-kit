@@ -1,35 +1,6 @@
 import { callApi } from '@/api/client/axios'
 import { apiUrl } from '@/app/config/env'
 
-// 블록 타입
-export type BlockType = 'TEXT' | 'CHECKLIST' | 'FILE'
-
-// 파일 정보 (블록에 포함)
-export type BlockFile = {
-  fileKey: string
-  fileName: string
-  fileType: string
-  fileCategory: 'IMAGE' | 'VIDEO' | 'FILE'
-  fileSize: string
-}
-
-// 메모 블록
-export type MemoBlock = {
-  idx?: number
-  memoIdx?: number
-  orderIndex: number
-  type: BlockType
-  content?: string | null
-  checked?: boolean | null
-  fileIdx?: number | null
-  displayWidth?: number | null
-  displayHeight?: number | null
-  videoDurationMs?: number | null
-  file?: BlockFile | null
-  createdAt?: string
-  updatedAt?: string
-}
-
 // 메모
 export type Memo = {
   idx: number
@@ -38,7 +9,7 @@ export type Memo = {
   archived: boolean
   createdAt: string
   updatedAt: string
-  blocks: MemoBlock[]
+  content?: string | null // Lexical JSON
 }
 
 export type MemoListResponse = {
@@ -82,7 +53,7 @@ export type SaveMemoDto = {
   title?: string | null
   pinned?: boolean
   archived?: boolean
-  blocks: Omit<MemoBlock, 'idx'>[]
+  content?: any // Lexical JSON 객체
 }
 
 export const createMemoApi = async (data: SaveMemoDto) => {
@@ -103,13 +74,6 @@ export const updateMemoApi = async (memoIdx: number, data: SaveMemoDto) => {
   })
 }
 
-export const toggleBlockCheckedApi = async (memoIdx: number, blockIdx: number) => {
-  return callApi<{ result: boolean }>({
-    method: 'patch',
-    url: `memo/${memoIdx}/block/${blockIdx}/toggle`,
-    showToast: false,
-  })
-}
 
 // 파일 정보
 export type FileInfo = {

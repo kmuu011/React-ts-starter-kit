@@ -52,11 +52,11 @@ export default function MemoEditPage() {
         </button>
       </div>
 
-      <h1 className="mb-6 text-2xl font-bold text-brand-3">메모 수정</h1>
+      <h1 className="mb-6 text-2xl font-bold text-neutral-900">메모 수정</h1>
 
       <MemoEditor
         initialTitle={memo.title}
-        initialBlocks={memo.blocks}
+        initialContent={memo.content}
         onSave={handleSave}
         onCancel={handleCancel}
       />

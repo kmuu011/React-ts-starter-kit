@@ -6,7 +6,6 @@ import MemoListPage from '../../features/memo/pages/List'
 import MemoDetailPage from '../../features/memo/pages/Detail'
 import MemoCreatePage from '../../features/memo/pages/Create'
 import MemoEditPage from '../../features/memo/pages/Edit'
-import LexicalTestPage from '../../features/test/pages/LexicalTest'
 
 export const router = createBrowserRouter([
   {
@@ -39,10 +38,6 @@ export const router = createBrowserRouter([
       {
         path: '/memo/:memoIdx/edit',
         element: <MemoEditPage />,
-      },
-      {
-        path: '/test/lexical',
-        element: <LexicalTestPage />,
       },
     ],
   },

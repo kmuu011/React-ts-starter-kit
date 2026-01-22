@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { getMemoDetailApi, toggleBlockCheckedApi, type MemoBlock } from '../api/memo.api'
+import type { EditorState } from 'lexical'
+import { getMemoDetailApi, updateMemoApi } from '../api/memo.api'
 import { ROUTER_PATHS, getMemoEditPath } from '@/app/consts/routerPaths'
 import { formatDate } from '@/shared/utils/dateUtils'
 
@@ -17,19 +18,20 @@ export const useMemoDetail = () => {
 
   const memo = data?.data
 
-  const toggleBlockMutation = useMutation({
-    mutationFn: (blockIdx: number) => toggleBlockCheckedApi(Number(memoIdx), blockIdx),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['memoDetail', memoIdx] })
+  const updateMutation = useMutation({
+    mutationFn: (content: any) =>
+      updateMemoApi(Number(memoIdx), {
+        title: memo?.title,
+        pinned: memo?.pinned,
+        archived: memo?.archived,
+        content,
+      }),
+    onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ['memoList'] })
+      // 상세 쿼리를 다시 가져와서 최신 데이터로 업데이트
+      await queryClient.refetchQueries({ queryKey: ['memoDetail', memoIdx] })
     },
   })
-
-  const handleToggleCheck = (block: MemoBlock) => {
-    if (block.type === 'CHECKLIST' && block.idx) {
-      toggleBlockMutation.mutate(block.idx)
-    }
-  }
 
   const handleGoToList = () => {
     navigate(ROUTER_PATHS.MEMO.LIST)
@@ -39,15 +41,19 @@ export const useMemoDetail = () => {
     navigate(getMemoEditPath(memoIdx!))
   }
 
+  const handleCheckboxToggle = (editorState: EditorState) => {
+    const content = editorState.toJSON()
+    updateMutation.mutate(content)
+  }
+
   return {
     memo,
     isLoading,
     isError,
     memoIdx,
-    handleToggleCheck,
     handleGoToList,
     handleGoToEdit,
+    handleCheckboxToggle,
     formatDate,
-    isToggling: toggleBlockMutation.isPending,
   }
 }

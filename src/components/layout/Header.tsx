@@ -15,8 +15,7 @@ export default function Header() {
           <NavLink
             to={ROUTER_PATHS.MEMO.LIST}
             className={({ isActive }) =>
-              `rounded px-3 py-2 transition ${
-                isActive ? 'bg-brand-3 text-white' : 'text-brand-3 hover:bg-brand-0'
+              `rounded px-3 py-2 transition ${isActive ? 'bg-brand-3 text-white' : 'text-brand-3 hover:bg-brand-0'
               }`
             }
           >
@@ -24,21 +23,9 @@ export default function Header() {
           </NavLink>
 
           <NavLink
-            to={ROUTER_PATHS.TEST.LEXICAL}
-            className={({ isActive }) =>
-              `rounded px-3 py-2 transition ${
-                isActive ? 'bg-brand-3 text-white' : 'text-brand-3 hover:bg-brand-0'
-              }`
-            }
-          >
-            Lexical Test
-          </NavLink>
-
-          <NavLink
             to={ROUTER_PATHS.LOGIN}
             className={({ isActive }) =>
-              `rounded px-3 py-2 transition ${
-                isActive ? 'bg-brand-3 text-white' : 'text-brand-3 hover:bg-brand-0'
+              `rounded px-3 py-2 transition ${isActive ? 'bg-brand-3 text-white' : 'text-brand-3 hover:bg-brand-0'
               }`
             }
           >

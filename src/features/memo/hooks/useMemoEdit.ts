@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { getMemoDetailApi, updateMemoApi, type MemoBlock } from '../api/memo.api'
+import type { EditorState } from 'lexical'
+import { getMemoDetailApi, updateMemoApi } from '../api/memo.api'
 import { getMemoDetailPath, ROUTER_PATHS } from '@/app/consts/routerPaths'
 
 export const useMemoEdit = () => {
@@ -17,22 +18,26 @@ export const useMemoEdit = () => {
   const memo = data?.data
 
   const updateMutation = useMutation({
-    mutationFn: (params: { title: string | null; blocks: Omit<MemoBlock, 'idx'>[] }) =>
+    mutationFn: (params: { title: string | null; content: any }) =>
       updateMemoApi(Number(memoIdx), {
         title: params.title,
         pinned: memo?.pinned,
         archived: memo?.archived,
-        blocks: params.blocks,
+        content: params.content,
       }),
-    onSuccess: () => {
+    onSuccess: async () => {
+      // 쿼리 무효화
       queryClient.invalidateQueries({ queryKey: ['memoList'] })
-      queryClient.invalidateQueries({ queryKey: ['memoDetail', memoIdx] })
+      // 상세 쿼리를 다시 가져와서 최신 데이터로 업데이트
+      await queryClient.refetchQueries({ queryKey: ['memoDetail', memoIdx] })
+      // 쿼리가 완료된 후 페이지 이동
       navigate(getMemoDetailPath(memoIdx!))
     },
   })
 
-  const handleSave = (title: string | null, blocks: Omit<MemoBlock, 'idx'>[]) => {
-    updateMutation.mutate({ title, blocks })
+  const handleSave = (title: string | null, editorState: EditorState) => {
+    const content = editorState.toJSON()
+    updateMutation.mutate({ title, content })
   }
 
   const handleCancel = () => {

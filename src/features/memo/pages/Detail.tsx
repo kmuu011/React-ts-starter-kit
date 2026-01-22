@@ -1,16 +1,15 @@
 import { useMemoDetail } from '../hooks/useMemoDetail'
-import MemoBlockRenderer from '../components/MemoBlockRenderer/MemoBlockRenderer'
+import LexicalEditor from '../components/LexicalEditor/LexicalEditor'
 
 export default function MemoDetailPage() {
   const {
     memo,
     isLoading,
     isError,
-    handleToggleCheck,
     handleGoToList,
     handleGoToEdit,
+    handleCheckboxToggle,
     formatDate,
-    isToggling,
   } = useMemoDetail()
 
   if (isLoading) {
@@ -39,8 +38,6 @@ export default function MemoDetailPage() {
     )
   }
 
-  const sortedBlocks = [...memo.blocks].sort((a, b) => a.orderIndex - b.orderIndex)
-
   return (
     <div className="mx-auto max-w-4xl px-4 py-8">
       <div className="mb-6 flex items-center justify-between">
@@ -55,7 +52,7 @@ export default function MemoDetailPage() {
         </button>
         <button
           onClick={handleGoToEdit}
-          className="flex items-center gap-2 rounded-base border border-neutral-300 bg-white px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50"
+          className="btn btn-primary w-auto h-auto px-4 py-2 text-sm gap-2"
         >
           <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -82,23 +79,19 @@ export default function MemoDetailPage() {
           {memo.title || '제목 없음'}
         </h1>
 
-        {sortedBlocks.length > 0 ? (
-          <div className="mb-6 space-y-3">
-            {sortedBlocks.map((block) => (
-              <div key={block.idx ?? block.orderIndex}>
-                <MemoBlockRenderer
-                  block={block}
-                  onToggleCheck={handleToggleCheck}
-                  isToggling={isToggling}
-                />
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="mb-6 text-neutral-400">
-            내용이 없습니다.
-          </div>
-        )}
+        <div className="mb-6">
+          {memo.content ? (
+            <LexicalEditor
+              initialEditorState={memo.content}
+              editable={false}
+              onCheckboxToggle={handleCheckboxToggle}
+            />
+          ) : (
+            <div className="text-neutral-400">
+              내용이 없습니다.
+            </div>
+          )}
+        </div>
 
         <div className="border-t border-neutral-100 pt-4">
           <div className="flex items-center justify-between text-xs text-neutral-500">

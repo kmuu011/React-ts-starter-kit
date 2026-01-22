@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { createMemoApi, type MemoBlock } from '../api/memo.api'
+import type { EditorState } from 'lexical'
+import { createMemoApi } from '../api/memo.api'
 import { ROUTER_PATHS } from '@/app/consts/routerPaths'
 
 export const useMemoCreate = () => {
@@ -15,12 +16,13 @@ export const useMemoCreate = () => {
     },
   })
 
-  const handleSave = (title: string | null, blocks: Omit<MemoBlock, 'idx'>[]) => {
+  const handleSave = (title: string | null, editorState: EditorState) => {
+    const content = editorState.toJSON()
     createMutation.mutate({
       title,
       pinned: false,
       archived: false,
-      blocks,
+      content: content as any,
     })
   }
 

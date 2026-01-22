@@ -13,8 +13,8 @@ import { mergeRegister } from '@lexical/utils'
 import { INSERT_IMAGE_COMMAND } from './ImagesPlugin'
 import { INSERT_VIDEO_COMMAND } from './VideosPlugin'
 import { INSERT_FILE_COMMAND } from './FilesPlugin'
-import { uploadFilesApi } from '../../memo/api/memo.api'
-import { getStaticFileUrl } from '../../memo/api/memo.api'
+import { uploadFilesApi } from '../../api/memo.api'
+import { getStaticFileUrl } from '../../api/memo.api'
 
 export default function ToolbarPlugin() {
   const [editor] = useLexicalComposerContext()
