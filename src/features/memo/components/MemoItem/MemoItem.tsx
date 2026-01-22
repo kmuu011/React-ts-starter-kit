@@ -1,5 +1,6 @@
-import { useNavigate } from 'react-router-dom'
-import type { Memo, MemoBlock } from '../api/memo.api'
+import type { Memo, MemoBlock } from '../../api/memo.api'
+import { formatDate } from '@/shared/utils/dateUtils'
+import { useMemoItem } from './useMemoItem'
 
 type MemoItemProps = {
   memo: Memo
@@ -7,21 +8,10 @@ type MemoItemProps = {
 }
 
 export default function MemoItem({ memo, maxPreviewLines = 5 }: MemoItemProps) {
-  const navigate = useNavigate()
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString)
-    return date.toLocaleString('ko-KR', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-    })
-  }
-
-  const sortedBlocks = [...memo.blocks].sort((a, b) => a.orderIndex - b.orderIndex)
-  const previewBlocks = sortedBlocks.slice(0, maxPreviewLines)
-  const hasMoreBlocks = sortedBlocks.length > maxPreviewLines
+  const { previewBlocks, hasMoreBlocks, handleClick, getFileTypeInfo } = useMemoItem({
+    memo,
+    maxPreviewLines,
+  })
 
   const renderBlockPreview = (block: MemoBlock) => {
     switch (block.type) {
@@ -43,25 +33,37 @@ export default function MemoItem({ memo, maxPreviewLines = 5 }: MemoItemProps) {
             </p>
           </div>
         )
-      case 'IMAGE':
+      case 'FILE': {
+        const { isImage, isVideo } = getFileTypeInfo(block)
+
         return (
           <div className="flex items-center gap-2 text-neutral-500">
-            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-            <span className="text-sm">이미지</span>
+            {isImage ? (
+              <>
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span className="text-sm">이미지</span>
+              </>
+            ) : isVideo ? (
+              <>
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span className="text-sm">비디오</span>
+              </>
+            ) : (
+              <>
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                </svg>
+                <span className="text-sm">파일</span>
+              </>
+            )}
           </div>
         )
-      case 'VIDEO':
-        return (
-          <div className="flex items-center gap-2 text-neutral-500">
-            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <span className="text-sm">비디오</span>
-          </div>
-        )
+      }
       default:
         return null
     }
@@ -69,7 +71,7 @@ export default function MemoItem({ memo, maxPreviewLines = 5 }: MemoItemProps) {
 
   return (
     <div
-      onClick={() => navigate(`/memo/${memo.idx}`)}
+      onClick={handleClick}
       className="cursor-pointer rounded-base border border-neutral-200 bg-white p-4 transition hover:border-neutral-300 hover:shadow-sm"
     >
       <div className="mb-3 flex items-center gap-2">

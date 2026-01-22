@@ -1,26 +1,9 @@
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { useMutation } from '@tanstack/react-query'
-import { loginApi } from '../api/login.api'
+import { Link } from 'react-router-dom'
+import { ROUTER_PATHS } from '@/app/consts/routerPaths'
+import { useLogin } from '../hooks/useLogin'
 
 export default function LoginPage() {
-  const navigate = useNavigate()
-  const [id, setId] = useState('')
-  const [password, setPassword] = useState('')
-
-  const loginMutation = useMutation({
-    mutationFn: loginApi,
-    onSuccess: (response) => {
-      if (response?.data?.success) {
-        // navigate('/')
-      }
-    },
-  })
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    loginMutation.mutate({ id, password })
-  }
+  const { id, setId, password, setPassword, handleSubmit, isLoading } = useLogin()
 
   return (
     <div className="flex min-h-[calc(100vh-3.5rem)] items-center justify-center px-4 py-12">
@@ -79,21 +62,21 @@ export default function LoginPage() {
 
           <button
             type="submit"
-            disabled={loginMutation.isPending}
+            disabled={isLoading}
             className="btn btn-primary"
           >
-            {loginMutation.isPending ? '로그인 중...' : '로그인'}
+            {isLoading ? '로그인 중...' : '로그인'}
           </button>
 
           <div className="text-center">
             <p className="text-sm text-neutral-600">
               계정이 없으신가요?{' '}
-              <Link
-                to="/signup"
-                className="font-medium text-brand-3 hover:text-brand-4 hover:underline"
-              >
-                회원가입
-              </Link>
+            <Link
+              to={ROUTER_PATHS.SIGNUP}
+              className="font-medium text-brand-3 hover:text-brand-4 hover:underline"
+            >
+              회원가입
+            </Link>
             </p>
           </div>
         </form>

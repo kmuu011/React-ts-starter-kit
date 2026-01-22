@@ -1,11 +1,11 @@
 import { createBrowserRouter } from 'react-router-dom'
 import PublicLayout from '../layouts/PublicLayout'
-import LoginPage from '../../features/auth/pages/login'
-import SignupPage from '../../features/auth/pages/signup'
-import MemoListPage from '../../features/memo/pages/list'
-import MemoDetailPage from '../../features/memo/pages/detail'
-import MemoCreatePage from '../../features/memo/pages/create'
-import MemoEditPage from '../../features/memo/pages/edit'
+import LoginPage from '../../features/auth/pages/Login'
+import SignupPage from '../../features/auth/pages/Signup'
+import MemoListPage from '../../features/memo/pages/List'
+import MemoDetailPage from '../../features/memo/pages/Detail'
+import MemoCreatePage from '../../features/memo/pages/Create'
+import MemoEditPage from '../../features/memo/pages/Edit'
 
 export const router = createBrowserRouter([
   {
