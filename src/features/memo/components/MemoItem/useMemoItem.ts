@@ -20,8 +20,7 @@ export const useMemoItem = ({ memo }: UseMemoItemProps) => {
     try {
       const content = typeof memo.content === 'string' ? JSON.parse(memo.content) : memo.content
       const mediaItems: Array<{ type: 'image' | 'video' | 'file'; index: number }> = []
-      let mediaIndex = 0
-      
+
       // Lexical JSON에서 텍스트 미리보기 추출 (paragraph 구분 유지, 체크박스 처리)
       const extractText = (node: any, parentListType?: string): string => {
         if (!node) return ''

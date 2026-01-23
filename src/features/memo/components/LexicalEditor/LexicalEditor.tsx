@@ -13,8 +13,7 @@ import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin'
 import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin'
 import { useEffect, useRef } from 'react'
 import type { EditorState } from 'lexical'
-import { $getRoot, $insertNodes, $getSelection, $isRangeSelection, $getNodeByKey } from 'lexical'
-import { ParagraphNode } from 'lexical'
+import { $getRoot, $getSelection, $isRangeSelection, $getNodeByKey } from 'lexical'
 import ToolbarPlugin from './ToolbarPlugin'
 import ImagesPlugin from './ImagesPlugin'
 import { ImageNode } from './ImageNode'
@@ -229,7 +228,7 @@ function CheckboxTogglePlugin({ onCheckboxToggle }: { onCheckboxToggle: (editorS
 
   useEffect(() => {
     // 체크박스 토글로 인한 업데이트를 감지하여 저장
-    const unregister = editor.registerUpdateListener(({ editorState, prevEditorState }) => {
+    const unregister = editor.registerUpdateListener(({ editorState }) => {
       if (pendingSaveRef.current) {
         const { nodeKey, newChecked } = pendingSaveRef.current
         pendingSaveRef.current = null
