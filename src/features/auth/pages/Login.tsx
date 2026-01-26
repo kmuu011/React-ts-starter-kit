@@ -3,7 +3,7 @@ import { ROUTER_PATHS } from '@/app/consts/routerPaths'
 import { useLogin } from '../hooks/useLogin'
 
 export default function LoginPage() {
-  const { id, setId, password, setPassword, handleSubmit, isLoading } = useLogin()
+  const { id, setId, password, setPassword, keepLogin, setKeepLogin, handleSubmit, isLoading } = useLogin()
 
   return (
     <div className="flex min-h-[calc(100vh-3.5rem)] items-center justify-center px-4 py-12">
@@ -44,20 +44,16 @@ export default function LoginPage() {
             />
           </div>
 
-          <div className="flex items-center justify-between">
+          <div>
             <label className="flex items-center">
               <input
                 type="checkbox"
+                checked={keepLogin}
+                onChange={(e) => setKeepLogin(e.target.checked)}
                 className="h-4 w-4 rounded border-neutral-300 text-brand-3 focus:ring-brand-3"
               />
               <span className="ml-2 text-sm text-neutral-600">로그인 상태 유지</span>
             </label>
-            <Link
-              to="/forgot-password"
-              className="text-sm text-brand-3 hover:text-brand-4 hover:underline"
-            >
-              비밀번호 찾기
-            </Link>
           </div>
 
           <button

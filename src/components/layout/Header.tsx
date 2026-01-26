@@ -13,7 +13,7 @@ export default function Header() {
         {/* 메뉴 */}
         <nav className="flex items-center gap-2 text-sm">
           <NavLink
-            to={ROUTER_PATHS.MEMO.LIST}
+            to={ROUTER_PATHS.MEMO.LIST + "?page=1"}
             className={({ isActive }) =>
               `rounded px-3 py-2 transition ${isActive ? 'bg-brand-3 text-white' : 'text-brand-3 hover:bg-brand-0'
               }`

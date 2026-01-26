@@ -1,5 +1,6 @@
 import MemoItem from '../components/MemoItem/MemoItem'
 import { useMemoList } from '../hooks/useMemoList'
+import Pagination from '@/components/ui/Pagination'
 
 export default function MemoListPage() {
   const {
@@ -8,10 +9,9 @@ export default function MemoListPage() {
     isLoading,
     isError,
     page,
-    lastPage,
+    pageSize,
     handleCreateMemo,
-    handlePrevPage,
-    handleNextPage,
+    handlePageChange,
   } = useMemoList()
 
   return (
@@ -60,27 +60,14 @@ export default function MemoListPage() {
             </div>
           )}
 
-          {lastPage > 1 && (
-            <div className="mt-6 flex items-center justify-center gap-2">
-              <button
-                onClick={handlePrevPage}
-                disabled={page === 1}
-                className="rounded-base border border-neutral-300 bg-white px-4 py-2 text-sm text-neutral-700 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-neutral-50"
-              >
-                이전
-              </button>
-              <span className="text-sm text-neutral-600">
-                {page} / {lastPage}
-              </span>
-              <button
-                onClick={handleNextPage}
-                disabled={page === lastPage}
-                className="rounded-base border border-neutral-300 bg-white px-4 py-2 text-sm text-neutral-700 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-neutral-50"
-              >
-                다음
-              </button>
-            </div>
-          )}
+          <Pagination
+            currentPage={page}
+            setCurrentPage={handlePageChange}
+            totalCount={totalCount}
+            pageSize={pageSize}
+            pageGroupSize={10}
+            includeEndButton={true}
+          />
         </>
       )}
     </div>

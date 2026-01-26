@@ -9,6 +9,7 @@ export const useLogin = () => {
   const navigate = useNavigate()
   const [id, setId] = useState('')
   const [password, setPassword] = useState('')
+  const [keepLogin, setKeepLogin] = useState(false)
 
   const loginMutation = useMutation({
     mutationFn: loginApi,
@@ -21,7 +22,7 @@ export const useLogin = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    loginMutation.mutate({ id, password })
+    loginMutation.mutate({ id, password, keepLogin })
   }
 
   return {
@@ -29,6 +30,8 @@ export const useLogin = () => {
     setId,
     password,
     setPassword,
+    keepLogin,
+    setKeepLogin,
     handleSubmit,
     isLoading: loginMutation.isPending,
   }
