@@ -21,6 +21,7 @@ import VideosPlugin from './VideosPlugin'
 import { VideoNode } from './VideoNode'
 import FilesPlugin from './FilesPlugin'
 import { FileNode } from './FileNode'
+import { Button } from '@/shared/components/ui/Button'
 import '../../lexical.css'
 
 const theme = {
@@ -369,20 +370,14 @@ function SaveButtonPlugin({ onSave, onCancel }: {
   return (
     <div className="border-t border-neutral-200 p-4 flex justify-end gap-2">
       {onCancel && (
-        <button
-          onClick={onCancel}
-          className="btn btn-secondary w-auto h-auto px-4 py-2 text-sm"
-        >
+        <Button onClick={onCancel} variant="secondary">
           취소
-        </button>
+        </Button>
       )}
       {onSave && (
-        <button
-          onClick={handleSave}
-          className="btn btn-primary w-auto h-auto px-4 py-2 text-sm"
-        >
+        <Button onClick={handleSave} variant="primary">
           저장
-        </button>
+        </Button>
       )}
     </div>
   )

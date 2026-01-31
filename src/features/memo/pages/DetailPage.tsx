@@ -1,5 +1,6 @@
 import { useMemoDetail } from '../hooks/useMemoDetail'
 import LexicalEditor from '../components/LexicalEditor/LexicalEditor'
+import { Button } from '@/shared/components/ui/Button'
 
 export default function MemoDetailPage() {
   const {
@@ -27,12 +28,14 @@ export default function MemoDetailPage() {
       <div className="mx-auto max-w-4xl px-4 py-8">
         <div className="rounded-base border border-red-200 bg-red-50 p-12 text-center">
           <p className="text-red-600">메모를 불러오는 중 오류가 발생했습니다.</p>
-          <button
+          <Button
             onClick={handleGoToList}
-            className="mt-4 text-sm text-neutral-600 underline hover:text-neutral-800"
+            variant="ghost"
+            size="sm"
+            className="mt-4 underline"
           >
             목록으로 돌아가기
-          </button>
+          </Button>
         </div>
       </div>
     )
@@ -41,24 +44,27 @@ export default function MemoDetailPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-8">
       <div className="mb-6 flex items-center justify-between">
-        <button
+        <Button
           onClick={handleGoToList}
-          className="flex items-center gap-1 text-sm text-neutral-600 hover:text-neutral-800"
+          variant="ghost"
+          size="sm"
+          className="flex items-center gap-1"
         >
           <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
           목록으로
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={handleGoToEdit}
-          className="btn btn-primary w-auto h-auto px-4 py-2 text-sm gap-2"
+          variant="primary"
+          className="flex items-center gap-2"
         >
           <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
           </svg>
           수정
-        </button>
+        </Button>
       </div>
 
       <div className="rounded-base border border-neutral-200 bg-white p-6">

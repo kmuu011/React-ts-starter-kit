@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { ROUTER_PATHS } from '@/shared/constants/routerPaths'
 import { useLogin } from '../hooks/useLogin'
+import { Button } from '@/shared/components/ui/Button'
 
 export default function LoginPage() {
   const { id, setId, password, setPassword, keepLogin, setKeepLogin, handleSubmit, isLoading } = useLogin()
@@ -56,13 +57,14 @@ export default function LoginPage() {
             </label>
           </div>
 
-          <button
+          <Button
             type="submit"
             disabled={isLoading}
-            className="btn btn-primary"
+            variant="primary"
+            fullWidth
           >
             {isLoading ? '로그인 중...' : '로그인'}
-          </button>
+          </Button>
 
           <div className="text-center">
             <p className="text-sm text-neutral-600">

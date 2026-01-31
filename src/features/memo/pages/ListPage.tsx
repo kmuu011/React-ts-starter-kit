@@ -1,6 +1,7 @@
 import MemoItem from '../components/MemoItem/MemoItem'
 import { useMemoList } from '../hooks/useMemoList'
 import Pagination from '@/shared/components/ui/Pagination'
+import { Button } from '@/shared/components/ui/Button'
 
 export default function MemoListPage() {
   const {
@@ -23,15 +24,12 @@ export default function MemoListPage() {
             저장된 메모를 확인하고 관리하세요 ({totalCount}개)
           </p>
         </div>
-        <button
-          onClick={handleCreateMemo}
-          className="flex items-center gap-2 rounded-base bg-brand-3 px-4 py-2 text-sm text-white hover:bg-brand-4"
-        >
-          <svg className="h-4 w-4" fill="none" stroke="#fff" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} stroke="#fff" d="M12 4v16m8-8H4" />
+        <Button onClick={handleCreateMemo} variant="brand" className="flex items-center gap-2">
+          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
           </svg>
           새 메모
-        </button>
+        </Button>
       </div>
 
       {isLoading && (

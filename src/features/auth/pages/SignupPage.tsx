@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { ROUTER_PATHS } from '@/shared/constants/routerPaths'
 import { useSignup } from '../hooks/useSignup'
+import { Button } from '@/shared/components/ui/Button'
 
 export default function SignupPage() {
   const {
@@ -89,13 +90,14 @@ export default function SignupPage() {
             />
           </div>
 
-          <button
+          <Button
             type="submit"
             disabled={isLoading}
-            className="btn btn-primary"
+            variant="primary"
+            fullWidth
           >
             {isLoading ? '가입 중...' : '회원가입'}
-          </button>
+          </Button>
 
           <div className="text-center">
             <p className="text-sm text-neutral-600">
