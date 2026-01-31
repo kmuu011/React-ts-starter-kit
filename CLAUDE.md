@@ -80,3 +80,30 @@ components/* : 재사용되는 화면 구성요소
 api/* : fetch/axios, React Query queryFn 등 API만
 
 hooks/use*.ts : 해당 feature 전용 훅
+
+6) 컴포넌트/페이지 로직 분리 패턴
+
+페이지와 컴포넌트에서 로직은 커스텀 훅으로 분리한다.
+
+페이지 로직 분리:
+- pages/ListPage.tsx → hooks/useMemoList.ts
+- pages/DetailPage.tsx → hooks/useMemoDetail.ts
+- 페이지는 UI 렌더링만, 훅은 상태/이벤트 핸들러/API 호출 담당
+
+컴포넌트 로직 분리 (복잡한 컴포넌트의 경우):
+- components/MemoItem/MemoItem.tsx → components/MemoItem/useMemoItem.ts
+- 같은 폴더 내에 컴포넌트와 훅을 함께 배치
+- 단순 UI 컴포넌트는 분리하지 않아도 됨
+
+예시 구조:
+features/memo/
+├── pages/
+│   ├── ListPage.tsx        // UI만
+│   └── DetailPage.tsx
+├── components/
+│   └── MemoItem/
+│       ├── MemoItem.tsx    // UI만
+│       └── useMemoItem.ts  // 로직
+└── hooks/
+    ├── useMemoList.ts      // ListPage 로직
+    └── useMemoDetail.ts    // DetailPage 로직
