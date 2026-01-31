@@ -4,18 +4,18 @@ import { ROUTER_PATHS } from '@/shared/constants/routerPaths'
 export default function Header() {
   return (
     <header className="sticky top-0 z-50 border-b bg-white/80 backdrop-blur">
-      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
+      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-3 sm:px-4">
         {/* 로고 */}
-        <Link to={ROUTER_PATHS.ROOT} className="text-lg font-bold text-slate-900">
+        <Link to={ROUTER_PATHS.ROOT} className="text-base font-bold text-slate-900 sm:text-lg">
           Welcome to React
         </Link>
 
         {/* 메뉴 */}
-        <nav className="flex items-center gap-2 text-sm">
+        <nav className="flex items-center gap-1 text-sm sm:gap-2">
           <NavLink
             to={ROUTER_PATHS.MEMO.LIST + "?page=1"}
             className={({ isActive }) =>
-              `rounded px-3 py-2 transition ${isActive ? 'bg-brand-3 text-white' : 'text-brand-3 hover:bg-brand-0'
+              `rounded px-2 py-1.5 transition sm:px-3 sm:py-2 ${isActive ? 'bg-brand-3 text-white' : 'text-brand-3 hover:bg-brand-0'
               }`
             }
           >
@@ -25,7 +25,7 @@ export default function Header() {
           <NavLink
             to={ROUTER_PATHS.LOGIN}
             className={({ isActive }) =>
-              `rounded px-3 py-2 transition ${isActive ? 'bg-brand-3 text-white' : 'text-brand-3 hover:bg-brand-0'
+              `rounded px-2 py-1.5 transition sm:px-3 sm:py-2 ${isActive ? 'bg-brand-3 text-white' : 'text-brand-3 hover:bg-brand-0'
               }`
             }
           >

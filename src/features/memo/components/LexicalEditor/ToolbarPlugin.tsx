@@ -200,7 +200,7 @@ export default function ToolbarPlugin() {
   }, [editor])
 
   return (
-    <div className="flex items-center gap-1 border-b border-neutral-200 p-2">
+    <div className="flex flex-wrap items-center gap-1 border-b border-neutral-200 p-2">
       <input
         ref={fileInputRef}
         type="file"
@@ -255,7 +255,7 @@ export default function ToolbarPlugin() {
         </svg>
       </button>
 
-      <div className="mx-1 h-6 w-px bg-neutral-300" />
+      <div className="mx-1 hidden h-6 w-px bg-neutral-300 sm:block" />
 
       <button
         onClick={() => editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'left')}
@@ -287,7 +287,7 @@ export default function ToolbarPlugin() {
         </svg>
       </button>
 
-      <div className="mx-1 h-6 w-px bg-neutral-300" />
+      <div className="mx-1 hidden h-6 w-px bg-neutral-300 sm:block" />
 
       <button
         onClick={() => editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined)}
@@ -325,7 +325,7 @@ export default function ToolbarPlugin() {
         </svg>
       </button>
 
-      <div className="mx-1 h-6 w-px bg-neutral-300" />
+      <div className="mx-1 hidden h-6 w-px bg-neutral-300 sm:block" />
 
       <button
         onClick={insertLink}
@@ -337,7 +337,7 @@ export default function ToolbarPlugin() {
         </svg>
       </button>
 
-      <div className="mx-1 h-6 w-px bg-neutral-300" />
+      <div className="mx-1 hidden h-6 w-px bg-neutral-300 sm:block" />
 
       <button
         onClick={() => fileInputRef.current?.click()}

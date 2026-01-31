@@ -102,10 +102,10 @@ const Pagination: React.FC<PaginationProps> = ({
   }, [currentPage, normalizedTotalCount, pageSize, normalizedPageGroupSize]);
 
   return (
-    <section className="mt-6 flex items-center justify-center gap-2">
+    <section className="mt-4 sm:mt-6 flex flex-wrap items-center justify-center gap-1 sm:gap-2">
       {includeEndButton && (
         <button
-          className={`flex h-8 w-8 items-center justify-center rounded border border-neutral-300 bg-white transition-all hover:border-brand-3 hover:bg-brand-0 ${
+          className={`flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded border border-neutral-300 bg-white transition-all hover:border-brand-3 hover:bg-brand-0 ${
             currentPageGroupNumber === 1 ? "cursor-not-allowed opacity-50" : "cursor-pointer"
           }`}
           onClick={() => {
@@ -113,11 +113,11 @@ const Pagination: React.FC<PaginationProps> = ({
           }}
           disabled={currentPageGroupNumber === 1}
         >
-          <img src={firstPageArrow} alt="firstPageArrowImg" className="h-4 w-4" />
+          <img src={firstPageArrow} alt="firstPageArrowImg" className="h-3 w-3 sm:h-4 sm:w-4" />
         </button>
       )}
       <button
-        className={`flex h-8 w-8 items-center justify-center rounded border border-neutral-300 bg-white transition-all hover:border-brand-3 hover:bg-brand-0 ${
+        className={`flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded border border-neutral-300 bg-white transition-all hover:border-brand-3 hover:bg-brand-0 ${
           currentPageGroupNumber === 1 ? "cursor-not-allowed opacity-50" : "cursor-pointer"
         }`}
         onClick={() => {
@@ -125,12 +125,12 @@ const Pagination: React.FC<PaginationProps> = ({
         }}
         disabled={currentPageGroupNumber === 1}
       >
-        <img src={leftArrow} alt="beforePageGroupArrowImg" className="h-4 w-4" />
+        <img src={leftArrow} alt="beforePageGroupArrowImg" className="h-3 w-3 sm:h-4 sm:w-4" />
       </button>
 
       {pageList.map((item, index) => (
         <div
-          className={`flex h-8 min-w-8 cursor-pointer items-center justify-center rounded border px-2 text-sm transition-all ${
+          className={`flex h-7 min-w-7 sm:h-8 sm:min-w-8 cursor-pointer items-center justify-center rounded border px-1.5 sm:px-2 text-xs sm:text-sm transition-all ${
             item === parseInt(String(currentPage))
               ? "border-brand-3 bg-brand-3 font-semibold text-white"
               : "border-neutral-300 bg-white text-neutral-700 hover:border-brand-3 hover:bg-brand-0"
@@ -145,7 +145,7 @@ const Pagination: React.FC<PaginationProps> = ({
       ))}
 
       <button
-        className={`flex h-8 w-8 items-center justify-center rounded border border-neutral-300 bg-white transition-all hover:border-brand-3 hover:bg-brand-0 ${
+        className={`flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded border border-neutral-300 bg-white transition-all hover:border-brand-3 hover:bg-brand-0 ${
           currentPageGroupNumber === lastPageGroupNumber ? "cursor-not-allowed opacity-50" : "cursor-pointer"
         }`}
         onClick={() => {
@@ -153,12 +153,12 @@ const Pagination: React.FC<PaginationProps> = ({
         }}
         disabled={currentPageGroupNumber === lastPageGroupNumber}
       >
-        <img src={rightArrow} alt="nextPageGroupArrowImg" className="h-4 w-4" />
+        <img src={rightArrow} alt="nextPageGroupArrowImg" className="h-3 w-3 sm:h-4 sm:w-4" />
       </button>
 
       {includeEndButton && (
         <button
-          className={`flex h-8 w-8 items-center justify-center rounded border border-neutral-300 bg-white transition-all hover:border-brand-3 hover:bg-brand-0 ${
+          className={`flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded border border-neutral-300 bg-white transition-all hover:border-brand-3 hover:bg-brand-0 ${
             currentPageGroupNumber === lastPageGroupNumber ? "cursor-not-allowed opacity-50" : "cursor-pointer"
           }`}
           onClick={() => {
@@ -166,7 +166,7 @@ const Pagination: React.FC<PaginationProps> = ({
           }}
           disabled={currentPageGroupNumber === lastPageGroupNumber}
         >
-          <img src={lastPageArrow} alt="lastPageArrowImg" className="h-4 w-4" />
+          <img src={lastPageArrow} alt="lastPageArrowImg" className="h-3 w-3 sm:h-4 sm:w-4" />
         </button>
       )}
     </section>

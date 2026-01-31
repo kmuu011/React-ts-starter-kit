@@ -108,28 +108,28 @@ export default function MemoItem({ memo }: MemoItemProps) {
   return (
     <div
       onClick={handleClick}
-      className="cursor-pointer rounded-base border border-neutral-200 bg-white p-4 transition hover:border-neutral-300 hover:shadow-sm"
+      className="cursor-pointer rounded-base border border-neutral-200 bg-white p-3 sm:p-4 transition hover:border-neutral-300 hover:shadow-sm"
     >
-      <div className="mb-3 flex items-center gap-2">
+      <div className="mb-2 sm:mb-3 flex items-center gap-2">
         {memo.pinned && (
-          <svg className="h-4 w-4 text-amber-500" fill="currentColor" viewBox="0 0 24 24">
+          <svg className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-amber-500 shrink-0" fill="currentColor" viewBox="0 0 24 24">
             <path d="M16 4l1.5 1.5-1.5 1.5h3v2h-3l1.5 1.5-1.5 1.5-5-5 5-5zm-6 8l-6 6v2h2l6-6-2-2z" />
           </svg>
         )}
-        <h3 className="text-lg font-bold text-neutral-900">
+        <h3 className="text-base sm:text-lg font-bold text-neutral-900 line-clamp-1">
           {memo.title || '제목 없음'}
         </h3>
       </div>
 
       {(previewText || mediaItems.length > 0) && (
-        <div className="mb-3 max-h-[4.5rem] overflow-hidden">
-          <div className="text-sm text-neutral-600 space-y-1">
+        <div className="mb-2 sm:mb-3 max-h-16 sm:max-h-18 overflow-hidden">
+          <div className="text-xs sm:text-sm text-neutral-600 space-y-1">
             {renderPreview()}
           </div>
         </div>
       )}
 
-      <div className="flex items-center justify-between text-xs text-neutral-500">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-0.5 sm:gap-0 text-[10px] sm:text-xs text-neutral-500">
         <span>작성일: {formatDate(memo.createdAt)}</span>
         {memo.updatedAt !== memo.createdAt && (
           <span>수정일: {formatDate(memo.updatedAt)}</span>
