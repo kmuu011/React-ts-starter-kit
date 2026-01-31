@@ -2,7 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import type { EditorState } from 'lexical'
 import { getMemoDetailApi, updateMemoApi } from '../api/memo.api'
-import { ROUTER_PATHS, getMemoEditPath } from '@/app/consts/routerPaths'
+import { ROUTER_PATHS, getMemoEditPath } from '@/shared/constants/routerPaths'
 import { formatDate } from '@/shared/utils/dateUtils'
 
 export const useMemoDetail = () => {

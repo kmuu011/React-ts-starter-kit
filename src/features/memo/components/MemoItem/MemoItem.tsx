@@ -1,4 +1,4 @@
-import type { Memo } from '../../api/memo.api'
+import type { Memo } from '../../types'
 import { formatDate } from '@/shared/utils/dateUtils'
 import { useMemoItem } from './useMemoItem'
 import type { ReactNode } from 'react'

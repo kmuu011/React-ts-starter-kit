@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
-import type { Memo } from '../../api/memo.api'
-import { getMemoDetailPath } from '@/app/consts/routerPaths'
+import type { Memo } from '../../types'
+import { getMemoDetailPath } from '@/shared/constants/routerPaths'
 
 interface UseMemoItemProps {
   memo: Memo

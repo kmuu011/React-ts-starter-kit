@@ -1,15 +1,6 @@
-import { callApi } from '@/api/client/axios'
 
-type LoginRequest = {
-  id: string
-  password: string
-  keepLogin: boolean
-}
-
-type LoginResponse = {
-  success: boolean
-  message?: string
-}
+import { callApi } from '@/shared/api/client/axios'
+import type { LoginRequest, LoginResponse } from '../types'
 
 export const loginApi = async ({ id, password, keepLogin }: LoginRequest) => {
   return callApi<LoginResponse>({

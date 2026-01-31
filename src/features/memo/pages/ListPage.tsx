@@ -1,6 +1,6 @@
 import MemoItem from '../components/MemoItem/MemoItem'
 import { useMemoList } from '../hooks/useMemoList'
-import Pagination from '@/components/ui/Pagination'
+import Pagination from '@/shared/components/ui/Pagination'
 
 export default function MemoListPage() {
   const {

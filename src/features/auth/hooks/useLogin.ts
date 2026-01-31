@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useMutation } from '@tanstack/react-query'
 import { loginApi } from '../api/login.api'
-import { ROUTER_PATHS } from '@/app/consts/routerPaths'
-import { httpStatus } from '@/app/consts/httpStatus'
+import { ROUTER_PATHS } from '@/shared/constants/routerPaths'
+import { httpStatus } from '@/shared/constants/httpStatus'
 
 export const useLogin = () => {
   const navigate = useNavigate()

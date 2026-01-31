@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { getCurrentPageGroupNumber, getPageGroup } from "@/shared/utils/paginationUtils";
 
-import leftArrow from "../../assets/button/pagination/arrow_left.svg";
-import rightArrow from "../../assets/button/pagination/arrow_right.svg";
-import firstPageArrow from "../../assets/button/pagination/arrow_first_page.svg";
-import lastPageArrow from "../../assets/button/pagination/arrow_last_page.svg";
+import leftArrow from "@/assets/button/pagination/arrow_left.svg";
+import rightArrow from "@/assets/button/pagination/arrow_right.svg";
+import firstPageArrow from "@/assets/button/pagination/arrow_first_page.svg";
+import lastPageArrow from "@/assets/button/pagination/arrow_last_page.svg";
 
 interface PaginationProps {
   dispatch?: any;

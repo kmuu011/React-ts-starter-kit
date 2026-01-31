@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import type { EditorState } from 'lexical'
 import { createMemoApi } from '../api/memo.api'
-import { ROUTER_PATHS } from '@/app/consts/routerPaths'
+import { ROUTER_PATHS } from '@/shared/constants/routerPaths'
 
 export const useMemoCreate = () => {
   const navigate = useNavigate()

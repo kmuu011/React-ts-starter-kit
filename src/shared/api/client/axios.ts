@@ -1,9 +1,9 @@
 import axios, { type AxiosRequestConfig, type AxiosResponse, type AxiosError, type Method, type AxiosProgressEvent } from 'axios'
 import { apiUrl } from '@/app/config/env'
-import { httpStatus } from '@/app/consts/httpStatus'
+import { httpStatus } from '@/shared/constants/httpStatus'
 import { getTimezoneOffset } from '@/shared/utils/dateUtils'
 import { useLoadingStore } from '@/shared/store/loadingStore'
-import { SESSION_KEY, NEW_SESSION_KEY } from '@/app/consts/sessionKeys'
+import { SESSION_KEY, NEW_SESSION_KEY } from '@/shared/constants/sessionKeys'
 import { useToastStore } from '@/shared/store/toastStore'
 
 interface CallApiOptions {

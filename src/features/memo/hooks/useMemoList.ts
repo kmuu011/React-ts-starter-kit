@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { getMemoListApi } from '../api/memo.api'
-import { ROUTER_PATHS } from '@/app/consts/routerPaths'
+import { ROUTER_PATHS } from '@/shared/constants/routerPaths'
 
 export const useMemoList = () => {
   const navigate = useNavigate()

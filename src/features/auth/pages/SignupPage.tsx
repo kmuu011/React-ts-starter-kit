@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { ROUTER_PATHS } from '@/app/consts/routerPaths'
+import { ROUTER_PATHS } from '@/shared/constants/routerPaths'
 import { useSignup } from '../hooks/useSignup'
 
 export default function SignupPage() {

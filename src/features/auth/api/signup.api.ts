@@ -1,18 +1,5 @@
-import { callApi } from '@/api/client/axios'
-
-type SignupRequest = {
-  id: string
-  password: string
-}
-
-type SignupResponse = {
-  success: boolean
-  message?: string
-}
-
-type DuplicateCheckResponse = {
-  isDuplicated: boolean
-}
+import { callApi } from '@/shared/api/client/axios'
+import type { SignupRequest, SignupResponse, DuplicateCheckResponse } from '../types'
 
 export const signupApi = async ({ id, password }: SignupRequest) => {
   return callApi<SignupResponse>({

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useMutation } from '@tanstack/react-query'
 import { signupApi, checkIdDuplicateApi } from '../api/signup.api'
 import { useToastStore } from '@/shared/store/toastStore'
-import { ROUTER_PATHS } from '@/app/consts/routerPaths'
+import { ROUTER_PATHS } from '@/shared/constants/routerPaths'
 
 export const useSignup = () => {
   const navigate = useNavigate()

@@ -1,5 +1,5 @@
 import { Link, NavLink } from 'react-router-dom'
-import { ROUTER_PATHS } from '@/app/consts/routerPaths'
+import { ROUTER_PATHS } from '@/shared/constants/routerPaths'
 
 export default function Header() {
   return (
