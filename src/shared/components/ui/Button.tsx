@@ -14,7 +14,7 @@ const variantStyles: Record<ButtonVariant, string> = {
   secondary: 'btn-secondary',
   ghost: 'btn-ghost',
   error: 'btn-error',
-  brand: 'bg-brand text-white hover:brightness-90',
+  brand: 'bg-brand-3 text-white hover:brightness-90',
 }
 
 const sizeStyles: Record<ButtonSize, string> = {
